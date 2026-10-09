@@ -1,7 +1,6 @@
 *.ipynb
 .pytype
 .DS_Store
-.vscode
 .idea
 mypy_report
 docs/build
@@ -134,3 +133,7 @@ sandbox/
 
 # Snapshot tests output
 #__snapshots__/
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
