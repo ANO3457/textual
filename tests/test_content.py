@@ -216,6 +216,30 @@ def test_truncate():
     assert content.truncate(15, pad=True).markup == "[red]Hello World[/red]    "
 
 
+@pytest.mark.parametrize(
+    "text,width,expected",
+    [
+        ("ab", 10, "    ab    "),
+        ("hello", 11, "   hello   "),
+        ("ab", 2, "ab"),
+        ("hello", 4, "hell"),
+        ("日本", 6, " 日本 "),
+    ],
+)
+def test_center(text: str, width: int, expected: str) -> None:
+    """Centered content should be exactly the requested width."""
+    content = Content(text).center(width)
+    assert content.plain == expected
+    assert content.cell_length == width
+
+
+def test_center_preserves_spans() -> None:
+    """Padding for centered content should shift spans, not drop them."""
+    content = Content.from_markup("[red]ab[/red]").center(6)
+    assert content.plain == "  ab  "
+    assert content.spans == [Span(2, 4, "red")]
+
+
 def test_assemble():
     """Test Content.assemble constructor."""
     content = Content.assemble(
